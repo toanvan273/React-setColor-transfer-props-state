@@ -7,29 +7,19 @@ class SetFont extends Component {
             fontSize : 8, //[8,10,12,14,16,18,20]
         }
     }
-    fnTru = () => {
-        this.setState(
-         {
-             fontSize: this.state.fontSize - 2
-         }
-        )
-    }
-    fnCong = () => {
-        this.setState({
-            fontSize: this.state.fontSize + 2
-        })
+    changeSize(value){
+        this.props.getFont(value)
     }
     render(){
         return(
             <div className="col-md-6">
                 <div className="panel panel-default">
                     <div className="panel-heading">
-                        <h3 className="panel-title">Set Font</h3>
+                        <h3 className="panel-title">Size: {this.props.fontSize} px</h3>
                     </div>
                     <div className="panel-body">
-                        <p><strong> {this.state.fontSize } px </strong></p>
-                        <button class="btn btn-default" type="submit" onClick={this.fnTru}>Trừ</button>
-                        <button class="btn btn-default" type="submit" onClick={this.fnCong}>Cộng</button>
+                        <button className="btn btn-default" type="submit" onClick={()=> this.changeSize(-2)}>Trừ</button>
+                        <button className="btn btn-default" type="submit" onClick={() => this.changeSize(2)}>Cộng</button>
                     </div>
                 </div>
             </div>

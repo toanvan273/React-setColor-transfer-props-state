@@ -3,13 +3,14 @@ import './App.css'
 import SetColor from './components/setColor'
 import SetFont from './components/SetFont'
 import Result from './components/Result'
+import Reset from './components/Reset'
 class App extends Component {
     constructor(props){
         super(props)
 
         this.state = {
             color : 'red',
-            fontSize: '16px'
+            fontSize: 16,
         }
     }
     toGetColor = (param) => {
@@ -18,7 +19,20 @@ class App extends Component {
         })
     }
     togetFont = (param) => {
+        if(this.state.fontSize + param >= 8 && this.state.fontSize + param <= 36 ){
+            this.setState({
+                fontSize: this.state.fontSize + param
+            })
+        }
         
+    }
+    toReset = (x) => {
+        if(x){
+            this.setState({
+                color : 'red',
+                fontSize: 16,
+            })
+        }
     }
   render() {
     return (
@@ -26,12 +40,12 @@ class App extends Component {
       <div className="container">
         <div className="row">
            <SetColor color={this.state.color} getColor={this.toGetColor}/>
-            <SetFont font={this.state.fontSize} getFont={this.togetFont}/>
+            <SetFont fontSize={this.state.fontSize} getFont={this.togetFont}/>
         </div>
 
         <div className="row">
-           <Result color={this.state.color}/>
-            <div className="col-md-6">6</div>
+           <Result color={this.state.color} fontSize={this.state.fontSize}/>
+            <Reset toReset={this.toReset}/>
         </div>
       </div>
     );

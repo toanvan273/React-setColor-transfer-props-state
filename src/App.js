@@ -1,25 +1,35 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
-
+import './App.css'
+import SetColor from './components/setColor'
+import SetFont from './components/SetFont'
+import Result from './components/Result'
 class App extends Component {
+    constructor(props){
+        super(props)
+
+        this.state = {
+            color : 'red',
+            fontSize: '16px'
+        }
+    }
+    toGetColor = (param) => {
+        this.setState({
+            color: param
+        })
+    }
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
+    
+      <div className="container">
+        <div className="row">
+           <SetColor color={this.state.color} getColor={this.toGetColor}/>
+            <SetFont />
+        </div>
+
+        <div className="row">
+           <Result color={this.state.color}/>
+            <div className="col-md-6">6</div>
+        </div>
       </div>
     );
   }

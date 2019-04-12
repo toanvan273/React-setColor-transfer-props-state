@@ -17,13 +17,16 @@ class App extends Component {
             color: param
         })
     }
+    togetFont = (param) => {
+        
+    }
   render() {
     return (
     
       <div className="container">
         <div className="row">
            <SetColor color={this.state.color} getColor={this.toGetColor}/>
-            <SetFont />
+            <SetFont font={this.state.fontSize} getFont={this.togetFont}/>
         </div>
 
         <div className="row">

@@ -1,24 +1,25 @@
 import React, { Component } from 'react';
 import './App.css'
-import SetColor from './components/setColor'
-import SetFont from './components/SetFont'
-import Result from './components/Result'
-import Reset from './components/Reset'
+import Form from './Form'
+
 class App extends Component {
 
   render() {
     return (
-    
       <div className="container">
-        <div className="row">
-           <SetColor />
-            <SetFont/>
-        </div>
+        
+        <div className="panel panel-info">
+            <div className="panel-heading">
+              <h3 className="panel-title">Form</h3>
+            </div>
+            <div className="panel-body">
+            <Form />
+             
 
-        <div className="row">
-           <Result />
-            <Reset />
+
+            </div>
         </div>
+        
       </div>
     );
   }

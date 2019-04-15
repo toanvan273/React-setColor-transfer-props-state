@@ -1,28 +1,40 @@
 import React, { Component } from 'react';
 import './App.css'
-import Form from './Form'
+import Toolbar from './components/Toolbar/Toolbar'
+import Sider from './components/Sider/Sider'
+import Backdrop from './components/Backdrop/Backdrop'
 
 class App extends Component {
-
-  render() {
+    state = {
+        siderOpen: false
+    }
+    toggleClick = () => {
+        this.setState({
+            siderOpen: !this.state.siderOpen
+        })
+    }
+    backdropClick = () => {
+        this.setState({
+            siderOpen: false
+        })
+    }
+    render() {
+        let  backdrop
+        if(this.state.siderOpen){
+            backdrop = <Backdrop backdropClick={this.backdropClick}/>
+        }
     return (
-      <div className="container">
+        <div style={{height: '100%'}}>
+        <Toolbar toggleClick={this.toggleClick}/> 
+        <Sider show={this.state.siderOpen}/>
+        {backdrop}
+        <main style={{marginTop: 65}}>
+        <p>Page Content</p>    
+        </main>  
         
-        <div className="panel panel-info">
-            <div className="panel-heading">
-              <h3 className="panel-title">Form</h3>
-            </div>
-            <div className="panel-body">
-            <Form />
-             
-
-
-            </div>
         </div>
-        
-      </div>
     );
-  }
+    }
 }
 
 export default App;

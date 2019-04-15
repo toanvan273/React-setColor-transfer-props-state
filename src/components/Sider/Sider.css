@@ -33,6 +33,17 @@
 .slider a:hover, .slider a:active {
     color: #fa923f;
 }
+.button{
+    position: relative;
+}
+.btn-default{
+    position: fixed;
+    right: -40px;
+    top: 10px;
+}
+.btn-default.close{
+    display: none;
+}
 
 @media (min-width: 769px){
     .slider{

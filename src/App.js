@@ -26,7 +26,7 @@ class App extends Component {
     return (
         <div style={{height: '100%'}}>
         <Toolbar toggleClick={this.toggleClick}/> 
-        <Sider show={this.state.siderOpen}/>
+        <Sider show={this.state.siderOpen} toggleClick={this.toggleClick}/>
         {backdrop}
         <main style={{marginTop: 65}}>
         <p>Page Content</p>    

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './App.css'
-import Toolbar from './components/Toolbar/Toolbar'
+import MainMenu from './components/Toolbar/Toolbar'
 import Sider from './components/Sider/Sider'
 import Backdrop from './components/Backdrop/Backdrop'
 
@@ -25,13 +25,12 @@ class App extends Component {
         }
     return (
         <div style={{height: '100%'}}>
-        <Toolbar toggleClick={this.toggleClick}/> 
-        <Sider show={this.state.siderOpen} toggleClick={this.toggleClick}/>
-        {backdrop}
-        <main style={{marginTop: 65}}>
-        <p>Page Content</p>    
-        </main>  
-        
+                <MainMenu toggleClick={this.toggleClick}/> 
+                <Sider show={this.state.siderOpen} toggleClick={this.toggleClick}/>
+                {backdrop}
+            <main style={{marginTop: 65}}>
+                <p>Page Content</p>    
+            </main>  
         </div>
     );
     }

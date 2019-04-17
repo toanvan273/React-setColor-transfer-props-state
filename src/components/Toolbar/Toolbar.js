@@ -2,7 +2,7 @@ import React from 'react'
 
 import ToggleButton from '../Sider/ToggleButton'
 import './Toolbar.css'
-const toolbar = props => (
+const MainMenu = props => (
     <header className="toolbar">
         <nav className="toolbar-navi">
             <div className="navi-button">
@@ -20,4 +20,4 @@ const toolbar = props => (
     </header>
 )
 
-export default toolbar
+export default MainMenu

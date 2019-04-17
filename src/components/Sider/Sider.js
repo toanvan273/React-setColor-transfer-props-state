@@ -6,7 +6,6 @@ const Sider = props =>{
     let btnClass = 'btn btn-default'
     if(props.show){
         siderClass = 'slider open'
-       
     }else{
         btnClass = 'btn btn-default close'
     }

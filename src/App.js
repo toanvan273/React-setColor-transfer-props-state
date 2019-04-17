@@ -1,38 +1,24 @@
 import React, { Component } from 'react';
 import './App.css'
-import MainMenu from './components/Toolbar/Toolbar'
-import Sider from './components/Sider/Sider'
-import Backdrop from './components/Backdrop/Backdrop'
+import Calendar from './Components/Calendar'
 
+
+const style = {
+  position: "relative",
+  margin: "50px auto"
+}
 class App extends Component {
-    state = {
-        siderOpen: false
+    onDayClick = (e, day) => {
+        alert(day);
     }
-    toggleClick = () => {
-        this.setState({
-            siderOpen: !this.state.siderOpen
-        })
-    }
-    backdropClick = () => {
-        this.setState({
-            siderOpen: false
-        })
-    }
+      
     render() {
-        let  backdrop
-        if(this.state.siderOpen){
-            backdrop = <Backdrop backdropClick={this.backdropClick}/>
-        }
-    return (
-        <div style={{height: '100%'}}>
-                <MainMenu toggleClick={this.toggleClick}/> 
-                <Sider show={this.state.siderOpen} toggleClick={this.toggleClick}/>
-                {backdrop}
-            <main style={{marginTop: 65}}>
-                <p>Page Content</p>    
-            </main>  
-        </div>
-    );
+        return (
+            <div className="App">
+            <Calendar style={style} width="302px" 
+              onDayClick={(e, day)=> this.onDayClick(e, day)}/>     
+          </div>
+        );
     }
 }
 

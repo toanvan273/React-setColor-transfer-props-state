@@ -42,9 +42,13 @@ class Calendar extends Component{
     renderCells() {
         const { currentMonth, selectedDate } = this.state;
         const monthStart = dateFns.startOfMonth(currentMonth);
+        // console.log('monthStart',monthStart)
         const monthEnd = dateFns.endOfMonth(monthStart);
+        // console.log('monthEnd',monthEnd)
         const startDate = dateFns.startOfWeek(monthStart);
+        // console.log('startDate',startDate)
         const endDate = dateFns.endOfWeek(monthEnd);
+        // console.log('endDate',endDate)
 
         const dateFormat = "D";
         const rows = [];
@@ -52,31 +56,36 @@ class Calendar extends Component{
         let day = startDate;
         let formattedDate = "";
         while (day <= endDate) {
-        for (let i = 0; i < 7; i++) {
-            formattedDate = dateFns.format(day, dateFormat);
-            const cloneDay = day;
-            days.push(
-            <div
-                className={`col cell ${
-                !dateFns.isSameMonth(day, monthStart)
-                    ? "disabled"
-                    : dateFns.isSameDay(day, selectedDate) ? "selected" : ""
-                }`}
-                key={day}
-                onClick={() => this.onDateClick(dateFns.parse(cloneDay))}
-            >
-                <span className="number">{formattedDate}</span>
-                <span className="bg">{formattedDate}</span>
-            </div>
+            for (let i = 0; i < 7; i++) {
+                formattedDate = dateFns.format(day, dateFormat);
+                // console.log('formattedDate',formattedDate)
+                const cloneDay = day;
+                // console.log('cloneDay',cloneDay)
+                // console.log('cloneDay',dateFns.parse(cloneDay))
+                days.push(
+                <div
+                    className={`col cell ${
+                    !dateFns.isSameMonth(day, monthStart)
+                        ? "disabled"
+                        : dateFns.isSameDay(day, selectedDate) ? "selected" : ""
+                    }`}
+                    key={day}
+                    onClick={() => this.onDateClick(dateFns.parse(cloneDay))}
+                >
+                    <span className="number">{formattedDate}</span>
+                    <span className="bg">{formattedDate}</span>
+                </div>
+                );
+                day = dateFns.addDays(day, 1);
+            
+            }  
+        // console.log('days',days)
+            rows.push(
+                <div className="row" key={day}>
+                {days}
+                </div>
             );
-            day = dateFns.addDays(day, 1);
-        }
-        rows.push(
-            <div className="row" key={day}>
-            {days}
-            </div>
-        );
-        days = [];
+            days = [];
         }
         return <div className="body">{rows}</div>;
     }
@@ -102,9 +111,7 @@ class Calendar extends Component{
 
     
     render(){
-        console.log('dateFns',dateFns.addDays(dateFns.startOfWeek(this.state.currentMonth),0))
-
-        
+        // console.log('dateFns',dateFns.endOfMonth(this.state.currentMonth))
 
         return(
             <div className="calendar">

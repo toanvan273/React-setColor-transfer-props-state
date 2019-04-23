@@ -27,7 +27,7 @@ class Calendar extends Component{
         );
     }
     renderDays() {
-        const dateFormat = "dddd";
+        const dateFormat = "ddd";
         const days = [];
         let startDate = dateFns.startOfWeek(this.state.currentMonth);
         for (let i = 0; i < 7; i++) {
@@ -57,7 +57,7 @@ class Calendar extends Component{
         let formattedDate = "";
         while (day <= endDate) {
             for (let i = 0; i < 7; i++) {
-                formattedDate = dateFns.format(day, dateFormat);
+                formattedDate = dateFns.format(day , dateFormat);
                 // console.log('formattedDate',formattedDate)
                 const cloneDay = day;
                 // console.log('cloneDay',cloneDay)
@@ -73,7 +73,7 @@ class Calendar extends Component{
                     onClick={() => this.onDateClick(dateFns.parse(cloneDay))}
                 >
                     <span className="number">{formattedDate}</span>
-                    <span className="bg">{formattedDate}</span>
+                    {/* <span className="bg">{formattedDate}</span> */}
                 </div>
                 );
                 day = dateFns.addDays(day, 1);
@@ -111,7 +111,7 @@ class Calendar extends Component{
 
     
     render(){
-        // console.log('dateFns',dateFns.endOfMonth(this.state.currentMonth))
+        // console.log('dateFns',dateFns())
 
         return(
             <div className="calendar">

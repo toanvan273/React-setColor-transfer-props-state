@@ -683,6 +683,7 @@ class Calendar extends Component {
         res += '</td>\n';
         return res;
     }
+
     render() {
         const today = new Date()
         const currentSolarday = today.getDate()

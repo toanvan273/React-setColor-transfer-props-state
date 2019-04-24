@@ -693,7 +693,7 @@ class Calendar extends Component {
         const currenSolartyear = today.getFullYear()
         const currentHour = today.getHours()
         const lunarDate = this.getLunarDate(currentSolarday,currenSolarmonth ,currenSolartyear) // {day: 19, month: 3, year: 2019, leap: 0, jd: 2458597}
-        const daysLunarMonth = this.getMonth(currenSolarmonth, currenSolartyear ) // 29 or 30 ngày âm theo tháng dương
+        const daysLunarMonth = this.getMonth(currenSolarmonth, currenSolartyear ) //Mảng có 29 or 30 p.tử LunarD theo tháng dương
         const dayName = this.getDayName( lunarDate) //  Ngày Canh Dần, tháng Mậu Thìn, năm Kỷ Hợi
         const yearCanChi = this.getYearCanChi( currenSolartyear) // Kỷ Hợi
         const CanChi =  this.getCanChi(lunarDate)   // ["Canh Dần", "Mậu Thìn", "Kỷ Hợi"]
@@ -703,8 +703,8 @@ class Calendar extends Component {
         const CurrentTime = this.getCurrentTime() // 17:08:14
         const GioHoangDao = this.getGioHoangDao(lunarDate.jd) // Tý (23-1), Sửu (1-3), Thìn (7-9), Tỵ (9-11), Mùi (13-15), Tuất (19-21)
         const CanHour0 = this.getCanHour0(lunarDate.jd) // Bính
-        console.log('A',lunarDate);
-        console.log('B', this.printMonth(currenSolarmonth, currenSolartyear));
+        console.log('A',daysLunarMonth);
+        console.log('B', (lunarDate.jd+ 1)%7);
         
     
         

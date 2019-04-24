@@ -173,6 +173,10 @@ class Calendar extends Component {
               { d: 23, m: 12, i: 'Ông Táo chầu trời' }
             ]
         },
+        today: new Date(),
+        month : (new Date().getMonth()+1),
+        year : (new Date().getFullYear())
+        
     }
 
     FIRST_DAY = this.jdn(31, 1, 1200) 
@@ -604,7 +608,6 @@ class Calendar extends Component {
             return false;
           }
         });
-        console.log('res',res);
         
         return res;
       }
@@ -670,7 +673,7 @@ class Calendar extends Component {
         }
         var lunar = lunarDate.day;
         if (solarDate == 1 || lunar == 1) {
-          lunar = lunarDate.day + '/' + lunarDate.month + (lunarDate.leap == 1 ? '<sup>N</sup>' : '');
+          lunar = lunarDate.day + '/' + lunarDate.month 
         }
         var res = "";
         var args = lunarDate.day + "," + lunarDate.month + "," + lunarDate.year + "," + lunarDate.leap;
@@ -684,10 +687,172 @@ class Calendar extends Component {
         return res;
     }
 
-
-
+    renderTable () {
+      const {month,year} = this.state
+      const days = []
+      let mm = month
+      let yy = year
+      let daysLunarMonth = this.getMonth(mm,yy)
+      let ld1 = daysLunarMonth[0]
+      let emptyCells = (ld1.jd + 1) % 7 // 1
+      let LunarHead = this.getYearCanChi(ld1.year)
+      for(let i = 0; i < 6; i++){
+        for(let j = 0; j < 7; j++){ // 42 laan j
+          let k = 7*i + j; // k từ 0 đến 41
+          if(k < emptyCells || k >= emptyCells + daysLunarMonth.length){
+              days.push(
+                <td key={k} className="ngaythang">
+                  <div className="cn">&nbsp; </div>
+                  <div className="am">&nbsp; </div>
+                </td>
+              )
+          }else {
+            let solar = k - emptyCells + 1; // rời rạc 1 tháng - ngày Dương
+            ld1 = daysLunarMonth[k - emptyCells] //rời rạc 1 tháng - ngày Âm
+            days.push( 
+              this.renderCell(ld1, solar , mm, yy)
+            )
+          }
+        }        
+      }
+      let rows = []
+      let cells = []
+      days.forEach((row,i) =>{
+        if ((i % 7) !== 0) {
+          cells.push(row);
+      } else {
+          let insertRow = cells.slice();
+          rows.push(insertRow);
+          cells = [];
+          cells.push(row);
+      }
+      if (i === days.length - 1) {
+          let insertRow = cells.slice();
+          rows.push(insertRow);
+      }
+      })
+        let trElems = rows.map((d, i) => {
+          return (
+              <tr key={i*100}>
+                  {d}
+              </tr>
+          );
+      })
+      return trElems
+    }
     
-
+    renderCell(lunarDate, solarDate, solarMonth, solarYear){
+      let today = new Date()
+      let days = {}
+      
+      var cellClass, solarClass, lunarClass, solarColor,
+        cellClass = "ngaythang",
+        solarClass = "t2t6",
+        lunarClass = "am",
+        title = '',
+        tmp = '',
+        dow = (lunarDate.jd + 1) % 7;
+        if (dow == 0) {
+          solarClass = "cn";
+          solarColor = "red";
+        } else if (dow == 6) {
+          solarClass = "t7";
+          solarColor = "green";
+        }
+        if (solarDate == today.getDate() && solarMonth == today.getMonth()+1 && solarYear == today.getFullYear()) {
+          cellClass = "homnay";
+        }
+        tmp = this.checkHolidayLunar( lunarDate.day, lunarDate.month);
+        
+        if ( tmp != '' ) {
+          cellClass = 'leam';
+          title = tmp;
+        }
+        tmp = this.checkHolidaySolar( solarDate, solarMonth);
+        if ( tmp != '' ) {
+          cellClass = 'leduong';
+          title = ( title == '' ? tmp : title+', '+tmp);
+        }
+        title = ( title == '' ? this.getDayName(lunarDate) : title );
+        if (lunarDate.day == 1 && lunarDate.month == 1) {
+          cellClass = "tet";
+        }
+        if (lunarDate.leap == 1) {
+          lunarClass = "am2";
+        }
+        let lunar = lunarDate.day; // tất cả ngày âm trong tháng
+        if (solarDate == 1 || lunar == 1) {
+          lunar = lunarDate.day + '/' + lunarDate.month ;
+        }
+        var args = lunarDate.day + "," + lunarDate.month + "," + lunarDate.year + "," + lunarDate.leap;
+        args += "," + lunarDate.jd + "," + solarDate + "," + solarMonth + "," + solarYear;
+        Object.assign(days, <td className={cellClass} title={title} data-args={args} >
+          <div className={solarClass}>{solarDate}</div>
+          <div className={lunarClass}> {lunar} </div>
+        </td>)
+      return days
+    }
+    renderDaysName(){
+      let daysName = this.state.DAYNAMES
+     return daysName.map(e =>{
+        return(
+          <td key={e} className="ngaytuan">
+              {e}
+          </td>
+        )
+      })
+      
+    }
+    renderHeader(){
+      const {month,year} = this.state
+      let mm = month
+      let yy = year
+      return(
+        <tr>
+          <td colSpan="1" className="navi-l">
+            <div className="icon" onClick={this.prevMonth}>
+              <span className="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+            </div>
+          </td>
+          <td colSpan="5" className="tenthang">
+          Lịch vạn niên tháng {mm} năm {yy}
+          </td>
+          <td colSpan="1" className="navi-r">
+            <div className="icon" onClick={this.nextMonth}>
+              <span className="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+            </div>
+          </td>
+        </tr>
+      )
+    }
+    nextMonth = () => {
+      let X = this.state.month
+      // console.log('X',X)
+      if(X < 12){
+        this.setState({
+          month: this.state.month + 1
+        })
+      }else(
+        this.setState({
+          month: 1,
+          year: this.state.year + 1
+        })
+      )
+      
+    }
+    prevMonth = () => {
+      let Y = this.state.month
+      if(Y > 1){
+        this.setState({
+          month: this.state.month - 1
+        })
+      }else(
+        this.setState({
+          month: 12,
+          year: this.state.year - 1
+        })
+      )           
+    }
     render() {
         const today = new Date()
         const currentSolarday = today.getDate()
@@ -705,19 +870,21 @@ class Calendar extends Component {
         const CurrentTime = this.getCurrentTime() // 17:08:14
         const GioHoangDao = this.getGioHoangDao(lunarDate.jd) // Tý (23-1), Sửu (1-3), Thìn (7-9), Tỵ (9-11), Mùi (13-15), Tuất (19-21)
         const CanHour0 = this.getCanHour0(lunarDate.jd) // Bính
-        console.log('A',daysLunarMonth);
-        console.log('B', (lunarDate.jd+ 1)%7);
-        
-    
-        
-        
-        
         return (
-            
            <>
-ABC
-           </>
-            
+            <table className="amlich">
+              <thead>
+                
+                {this.renderHeader()}
+              </thead>
+              <tbody>
+                <tr>
+                  {this.renderDaysName()}
+                </tr>
+                {this.renderTable()}
+              </tbody>
+            </table>
+            </>
         );
     }
 }

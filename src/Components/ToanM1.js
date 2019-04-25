@@ -439,7 +439,7 @@ class Calendar extends Component {
         return ret;
     }
 
-     SunLongitude(jdn) {
+    SunLongitude(jdn) {
         //  console.log('jdn',jdn)
         var T, T2, dr, M, L0, DL, lambda, theta, omega;
         T = (jdn - 2451545.0) / 36525; // Time in Julian centuries from 2000-01-01 12:00:00 GMT
@@ -467,65 +467,65 @@ class Calendar extends Component {
         return this.state.CAN[(jdn - 1) * 2 % 10];
     }
 
-    printMonth(mm, yy) {
-        var res = "";
-        res += this.printTable(mm, yy);
-        return res;
-    }
+    // printMonth(mm, yy) {
+    //     var res = "";
+    //     res += this.printTable(mm, yy);
+    //     return res;
+    // }
 
-    printYear(yy) {
-        var yearName = "Năm " + this.getYearCanChi(yy) + " " + yy;
-        var res = "";
-        res += '<table align="center">\n';
-        res += '<tbody>\n';
-        res += '<tr>\n';
-        res += '  <td colspan="3" class="amlich-tennam" onClick="showYearSelect();">'+yearName+'</td>\n';
-        res += '</tr>\n';
-        for (var i = 1; i<= 12; i++) {
-          if (i % 3 == 1) res += '<tr>\n';
-          res += '<td>\n';
-          res += this.printTable(i, yy);
-          res += '</td>\n';
-          if (i % 3 == 0) res += '</tr>\n';
-        }
-        res += '</tbody>\n';
-        res += '</table>\n';
-        return res;
-      }
+    // printYear(yy) {
+    //     var yearName = "Năm " + this.getYearCanChi(yy) + " " + yy;
+    //     var res = "";
+    //     res += '<table align="center">\n';
+    //     res += '<tbody>\n';
+    //     res += '<tr>\n';
+    //     res += '  <td colspan="3" class="amlich-tennam" onClick="showYearSelect();">'+yearName+'</td>\n';
+    //     res += '</tr>\n';
+    //     for (var i = 1; i<= 12; i++) {
+    //       if (i % 3 == 1) res += '<tr>\n';
+    //       res += '<td>\n';
+    //       res += this.printTable(i, yy);
+    //       res += '</td>\n';
+    //       if (i % 3 == 0) res += '</tr>\n';
+    //     }
+    //     res += '</tbody>\n';
+    //     res += '</table>\n';
+    //     return res;
+    //   }
     
-     printTable(mm, yy) {
-        var i, j, k, solar, lunar, cellClass, solarClass, lunarClass;
-        var currentMonth = this.getMonth(mm, yy);
-        if (currentMonth.length == 0) return false;
-        var ld1 = currentMonth[0];
-        var emptyCells = (ld1.jd + 1) % 7;
-        var MonthHead = mm + "/" + yy;
-        var LunarHead = this.getYearCanChi(ld1.year);
-        var res = "";
-        res += '<table class="amlich" border="0" cellpadding="0" cellspacing="0" width="'+this.state.settings.tableWidth+'">\n';
-        res += '<tbody>\n';
-        res += this.printHead(mm, yy);
-        for (i = 0; i < 6; i++) {
-          res += '<tr>\n';
-          for (j = 0; j < 7; j++) {
-            k = 7 * i + j;
-            if (k < emptyCells || k >= emptyCells + currentMonth.length) {
-              res += '<td class="ngaythang">\n';
-              res += '  <div class="cn">&nbsp;</div>\n';
-              res += '  <div class="am">&nbsp;</div>\n';
-              res += '</td>\n';
-            } else {
-              solar = k - emptyCells + 1;
-              ld1 = currentMonth[k - emptyCells];
-              res += this.printCell(ld1, solar, mm, yy);
-            }
-          }
-          res += '</tr>\n';
-        }
-        res += '</tbody>\n';
-        res += '</table>\n';
-        return res;
-    }
+    //  printTable(mm, yy) {
+    //     var i, j, k, solar, lunar, cellClass, solarClass, lunarClass;
+    //     var currentMonth = this.getMonth(mm, yy);
+    //     if (currentMonth.length == 0) return false;
+    //     var ld1 = currentMonth[0];
+    //     var emptyCells = (ld1.jd + 1) % 7;
+    //     var MonthHead = mm + "/" + yy;
+    //     var LunarHead = this.getYearCanChi(ld1.year);
+    //     var res = "";
+    //     res += '<table class="amlich" border="0" cellpadding="0" cellspacing="0" width="'+this.state.settings.tableWidth+'">\n';
+    //     res += '<tbody>\n';
+    //     res += this.printHead(mm, yy);
+    //     for (i = 0; i < 6; i++) {
+    //       res += '<tr>\n';
+    //       for (j = 0; j < 7; j++) {
+    //         k = 7 * i + j;
+    //         if (k < emptyCells || k >= emptyCells + currentMonth.length) {
+    //           res += '<td class="ngaythang">\n';
+    //           res += '  <div class="cn">&nbsp;</div>\n';
+    //           res += '  <div class="am">&nbsp;</div>\n';
+    //           res += '</td>\n';
+    //         } else {
+    //           solar = k - emptyCells + 1;
+    //           ld1 = currentMonth[k - emptyCells];
+    //           res += this.printCell(ld1, solar, mm, yy);
+    //         }
+    //       }
+    //       res += '</tr>\n';
+    //     }
+    //     res += '</tbody>\n';
+    //     res += '</table>\n';
+    //     return res;
+    // }
 
     getPrevMonthLink(mm, yy) {
         var mm1 = mm > 1 ? mm-1 : 12;
@@ -636,56 +636,56 @@ class Calendar extends Component {
         return res;
     }
 
-    printCell(lunarDate, solarDate, solarMonth, solarYear) {
-        var cellClass, solarClass, lunarClass, solarColor,
-            cellClass = "ngaythang",
-            solarClass = "t2t6",
-            lunarClass = "am",
-            title = '',
-            tmp = '',
-            dow = (lunarDate.jd + 1) % 7;
-        if (dow == 0) {
-          solarClass = "cn";
-          solarColor = "red";
-        } else if (dow == 6) {
-          solarClass = "t7";
-          solarColor = "green";
-        }
-        if (solarDate == this.today.getDate() && solarMonth == this.today.getMonth()+1 && solarYear == this.today.getFullYear()) {
-          cellClass = "homnay";
-        }
-        tmp = this.checkHolidayLunar( lunarDate.day, lunarDate.month);
-        if ( tmp != '' ) {
-          cellClass = 'leam';
-          title = tmp;
-        }
-        tmp = this.checkHolidaySolar( solarDate, solarMonth);
-        if ( tmp != '' ) {
-          cellClass = 'leduong';
-          title = ( title == '' ? tmp : title+', '+tmp);
-        }
-        title = ( title == '' ? this.getDayName(lunarDate) : title );
-        if (lunarDate.day == 1 && lunarDate.month == 1) {
-          cellClass = "tet";
-        }
-        if (lunarDate.leap == 1) {
-          lunarClass = "am2";
-        }
-        var lunar = lunarDate.day;
-        if (solarDate == 1 || lunar == 1) {
-          lunar = lunarDate.day + '/' + lunarDate.month 
-        }
-        var res = "";
-        var args = lunarDate.day + "," + lunarDate.month + "," + lunarDate.year + "," + lunarDate.leap;
-        args += "," + lunarDate.jd + "," + solarDate + "," + solarMonth + "," + solarYear;
-        res += '<td class="'+cellClass+'"';
-        res += (lunarDate != null ? ' title="'+title+'" data-args="'+args+'"' : '');
-        res += '>\n';
-        res += '  <div class="'+solarClass+'">'+solarDate+'</div>\n';
-        res += '  <div class="'+lunarClass+'">'+lunar+'</div>\n';
-        res += '</td>\n';
-        return res;
-    }
+    // printCell(lunarDate, solarDate, solarMonth, solarYear) {
+    //     var cellClass, solarClass, lunarClass, solarColor,
+    //         cellClass = "ngaythang",
+    //         solarClass = "t2t6",
+    //         lunarClass = "am",
+    //         title = '',
+    //         tmp = '',
+    //         dow = (lunarDate.jd + 1) % 7;
+    //     if (dow == 0) {
+    //       solarClass = "cn";
+    //       solarColor = "red";
+    //     } else if (dow == 6) {
+    //       solarClass = "t7";
+    //       solarColor = "green";
+    //     }
+    //     if (solarDate == this.today.getDate() && solarMonth == this.today.getMonth()+1 && solarYear == this.today.getFullYear()) {
+    //       cellClass = "homnay";
+    //     }
+    //     tmp = this.checkHolidayLunar( lunarDate.day, lunarDate.month);
+    //     if ( tmp != '' ) {
+    //       cellClass = 'leam';
+    //       title = tmp;
+    //     }
+    //     tmp = this.checkHolidaySolar( solarDate, solarMonth);
+    //     if ( tmp != '' ) {
+    //       cellClass = 'leduong';
+    //       title = ( title == '' ? tmp : title+', '+tmp);
+    //     }
+    //     title = ( title == '' ? this.getDayName(lunarDate) : title );
+    //     if (lunarDate.day == 1 && lunarDate.month == 1) {
+    //       cellClass = "tet";
+    //     }
+    //     if (lunarDate.leap == 1) {
+    //       lunarClass = "am2";
+    //     }
+    //     var lunar = lunarDate.day;
+    //     if (solarDate == 1 || lunar == 1) {
+    //       lunar = lunarDate.day + '/' + lunarDate.month 
+    //     }
+    //     var res = "";
+    //     var args = lunarDate.day + "," + lunarDate.month + "," + lunarDate.year + "," + lunarDate.leap;
+    //     args += "," + lunarDate.jd + "," + solarDate + "," + solarMonth + "," + solarYear;
+    //     res += '<td class="'+cellClass+'"';
+    //     res += (lunarDate != null ? ' title="'+title+'" data-args="'+args+'"' : '');
+    //     res += '>\n';
+    //     res += '  <div class="'+solarClass+'">'+solarDate+'</div>\n';
+    //     res += '  <div class="'+lunarClass+'">'+lunar+'</div>\n';
+    //     res += '</td>\n';
+    //     return res;
+    // }
 
     renderTable () {
       const {month,year} = this.state
@@ -874,7 +874,6 @@ class Calendar extends Component {
            <>
             <table className="amlich">
               <thead>
-                
                 {this.renderHeader()}
               </thead>
               <tbody>

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './App.css'
-import Calendar from './Components/ToanM1'
+import Calendar from './Components/CalendarSolardateFns'
 
 
 class App extends Component {

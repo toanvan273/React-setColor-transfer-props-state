@@ -1,11 +1,21 @@
 import React, { Component } from 'react';
 import './App.css'
-
+import LichVanNien from './components/LichVanNien'
 class App extends Component {
     constructor(props){
         super(props)
         this.state = {
-            fruitName: ''
+            fruitName: 'mango',
+            solar: {
+                day: 1,
+                month: 1,
+                year: 2000
+            },
+            lunar: {
+                day: 1,
+                month: 1,
+                year: 2000
+            }
         }
         this.onHandleChange = this.onHandleChange.bind(this)
         this.onHandleSubmit = this.onHandleSubmit.bind(this)
@@ -22,13 +32,13 @@ class App extends Component {
         value.preventDefault()
     }
   render() {
-      console.log('A',this.state.fruitName);
       
     return (
+        <>
     <div className="container">
         <form onSubmit={this.onHandleSubmit}>
             <label>Trái cây: </label> 
-            <select onChange={ this.onHandleChange } name="fruitName">
+            <select onChange={ this.onHandleChange } defaultValue={this.state.fruitName} name="fruitName">
                 <option value="grapefruit">Grapefruit</option>
                 <option value="lime">Lime</option>
                 <option selected value="coconut">Coconut</option>
@@ -36,7 +46,10 @@ class App extends Component {
             </select>
             <button type="submit" className="btn btn-danger">Submit</button>
         </form>
-    </div>
+    </div> <br></br>
+    <LichVanNien solar={this.state.solar} lunar={this.state.lunar}/>
+
+    </>
     );
   }
 }

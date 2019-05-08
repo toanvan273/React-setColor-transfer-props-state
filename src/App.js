@@ -1,27 +1,38 @@
 import React, { Component } from 'react';
 import './App.css'
-import SetColor from './components/setColor'
-import SetFont from './components/SetFont'
-import Result from './components/Result'
-import Reset from './components/Reset'
+import Menu from './components/Menu/Menu'
+import routes from './routes'
+import { Switch, Route, BrowserRouter as Router } from 'react-router-dom'
+
 class App extends Component {
+    render() {
+        return (
+            <Router>
+                <Menu />
+                <div className="container">
+                    {this.showContentMenus(routes)}
+                </div>
+            </Router>
+        );
+    }
 
-  render() {
-    return (
-    
-      <div className="container">
-        <div className="row">
-           <SetColor />
-            <SetFont/>
-        </div>
+    showContentMenus = (routes) => {
+        var result = null;
+        if (routes.length > 0) {
+            result = routes.map((route, index) => {
+                return (
+                    <Route
+                        key={index}
+                        path={route.path}
+                        exact={route.exact}
+                        component={route.main}
+                    />
+                )
+            })
+        }
 
-        <div className="row">
-           <Result />
-            <Reset />
-        </div>
-      </div>
-    );
-  }
+        return <Switch> {result} </Switch>
+    }
 }
 
 export default App;

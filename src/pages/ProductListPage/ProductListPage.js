@@ -19,6 +19,30 @@ class ProductListPage extends Component {
        })
 
     }
+
+    onDelete = id => {
+        let { products } = this.state
+        let index = this.findIndex(products, id)
+        callApi(`products/${id}`, 'DELETE', null).then(res => {
+           if(res.status === 200){ // ok, đã xóa trên api
+                products.splice(index, 1)
+                this.setState({
+                    products: products
+                })
+           }
+        })
+ 
+    }
+    findIndex = (products, id) => {
+        let result = -1
+        products.forEach( (product,index) => {
+            if(product.id === id){
+                return result = index
+            }
+        });
+
+        return result
+    }
     render() {
         // const { products } = this.props
         const { products } = this.state
@@ -46,6 +70,7 @@ class ProductListPage extends Component {
                         key={index}
                         product={product}
                         index={index}
+                        onDelete={this.onDelete}
                     />
                 )
             })

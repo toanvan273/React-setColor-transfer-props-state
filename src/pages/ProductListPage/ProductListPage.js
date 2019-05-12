@@ -2,50 +2,22 @@ import React, { Component } from 'react';
 import ProductList from './../../components/ProductList/ProductList'
 import ProductItem from './../../components/ProductItem/ProductItem'
 import { connect } from 'react-redux'
-import callApi from './../../utils/apiCaller';
 import { Link } from 'react-router-dom'
-class ProductListPage extends Component {
-    constructor(props){
-        super(props)
-        this.state = {
-            products : []
-        }
-    }
-    componentDidMount(){
-       callApi("products", 'GET', null).then(res => {
-           this.setState({
-               products: res.data
-           })
-       })
+import * as actions from './../../actions'
 
+
+class ProductListPage extends Component {
+ 
+    componentDidMount(){
+        this.props.fetchAllProducts()
     }
 
     onDelete = id => {
-        let { products } = this.state
-        let index = this.findIndex(products, id)
-        callApi(`products/${id}`, 'DELETE', null).then(res => {
-           if(res.status === 200){ // ok, đã xóa trên api
-                products.splice(index, 1)
-                this.setState({
-                    products: products
-                })
-           }
-        })
- 
+        this.props.ondeleteProduct(id)
     }
-    findIndex = (products, id) => {
-        let result = -1
-        products.forEach( (product,index) => {
-            if(product.id === id){
-                return result = index
-            }
-        });
 
-        return result
-    }
     render() {
-        // const { products } = this.props
-        const { products } = this.state
+        const { products } = this.props
         return (
             <>
                 <div className="row">
@@ -87,7 +59,12 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-
+        fetchAllProducts: () => {
+            dispatch(actions.actFetchProductsRequest())
+        },
+        ondeleteProduct: id => {
+            dispatch(actions.actDelelteProductRequest(id))
+        }
     }
 }
 

@@ -3,6 +3,7 @@ import HomePage from './pages/HomePage/HomePage'
 import NotFoundPage from './pages/NotFoundPage/NotFoundPage'
 import ProductListPage from './pages/ProductListPage/ProductListPage'
 import ProductActionPage from './pages/ProductActionPage/ProductActionPage'
+import Image from './components/Image/Image'
 
 const routes = [
     {
@@ -24,6 +25,11 @@ const routes = [
         path: '/product/:id/edit',
         exact : false,
         main : ({match, history}) => <ProductActionPage match={match} history={history}/>
+    },
+    {
+        path: '/photos',
+        exact : false,
+        main : ({match, history}) => <Image match={match} history={history}/>
     },
     {
         path: '',

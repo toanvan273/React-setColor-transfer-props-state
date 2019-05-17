@@ -11,6 +11,11 @@ const menus = [
         name: 'Quản Lý Sản Phẩm',
         to: '/product-list',
         exact: false
+    },
+    {
+        name: 'Hình ảnh',
+        to: '/photos',
+        exact: false
     }
 ]
 

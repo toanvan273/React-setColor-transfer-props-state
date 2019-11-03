@@ -1,18 +1,25 @@
 import React, { Component } from 'react';
 import './App.css'
-import Calendar from './Components/Calendar'
+import styled from 'styled-components'
 
-const style = {
-    position: "relative",
-    margin: "50px auto"
-  }
+
+const Bound = styled.div`
+    display:flex;
+    flex-direction:column;
+    width:100%;
+    height:100%;
+    position:relative;
+    min-width: 768px;
+    overflow: hidden;
+
+`
 class App extends Component {
      
     render() {
         return (
-            <div className="App">
-                <Calendar style={style} width="302px" />
-            </div>
+            <Bound>
+                BABS
+            </Bound>
         );
     }
 }

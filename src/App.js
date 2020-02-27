@@ -11,6 +11,7 @@ class App extends Component {
         this.state = {
             color : 'red',
             fontSize: 16,
+            name:null
         }
     }
     toGetColor = (param) => {

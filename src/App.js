@@ -90,7 +90,7 @@ class App extends Component {
                     <Reset toReset={this.toReset} />
                 </div>
                 <div className="row">
-                    <Dequy data={dataSet} />
+                    <Dequy data={dataSet} depth={0} />
                 </div>
             </div>
         );

@@ -7,6 +7,7 @@ class Dequy extends React.PureComponent {
             dataGet: props.data
         }
     }
+ 
     onChoseItem = (item) => {
         let { dataGet } = this.state
         console.log("dataGet: ", dataGet);
@@ -28,9 +29,9 @@ class Dequy extends React.PureComponent {
                 {dataGet.length > 0 &&
                     dataGet.map((item, index) => {
                         return (
-                            <div className={'label_' + item.label} key={index} >
-                                <h3 onClick={() => this.onChoseItem(item, index)}>{item.label}</h3>
-                                {item.data && item.data.length > 0 && <MyDequy data={item.data} />}
+                            <div  key={index} >
+                                <h3 style={{paddingLeft:this.props.depth*25}} onClick={() => this.onChoseItem(item, index)}>{item.label}</h3>
+                                {item.data && item.data.length > 0 && <MyDequy depth={this.props.depth+1} data={item.data} />}
                             </div>
                         )
                     })

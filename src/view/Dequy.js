@@ -1,37 +1,38 @@
 import React from 'react';
-import MyDequy from './Dequy'
-class Dequy extends React.PureComponent {
+class Dequy extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            dataGet: props.data
+            data: props.data
         }
     }
  
     onChoseItem = (item) => {
-        let { dataGet } = this.state
-        console.log("dataGet: ", dataGet);
-        let newData = dataGet
+        let { data } = this.state
+        let newData = data
         newData.map((v, i) => {
             if (v.label === item.label) {
                 newData.splice(i, 1)
             }
+            return newData
         })
-        console.log('2=', dataGet)
-        console.log('newData', newData)
-        this.setState({ dataGet:newData })
+        this.setState({ data:newData })
     }
+    shouldComponentUpdate(nextProps,nextState){
+        return true
+    }
+    
     render() {
-        let { dataGet } = this.state
-        console.log('render: ', dataGet)
+        let { data } = this.state
+        // console.log('render: ', data)
         return (
             <React.Fragment >
-                {dataGet.length > 0 &&
-                    dataGet.map((item, index) => {
+                {data.length > 0 &&
+                    data.map((item, index) => {
                         return (
                             <div  key={index} >
                                 <h3 style={{paddingLeft:this.props.depth*25}} onClick={() => this.onChoseItem(item, index)}>{item.label}</h3>
-                                {item.data && item.data.length > 0 && <MyDequy depth={this.props.depth+1} data={item.data} />}
+                                {item.data && item.data.length > 0 && <Dequy depth={this.props.depth+1} data={item.data} />}
                             </div>
                         )
                     })

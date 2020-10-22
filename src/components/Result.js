@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-
+import {withTranslate} from 'react-redux-multilingual'
 class Result extends Component {
     // constructor(props){
     //     super(props)
@@ -13,6 +13,7 @@ class Result extends Component {
         }
     }
     render(){
+        const {translate} = this.props
         return(
             <div className="col-md-6">
                 <div className="panel panel-default">
@@ -21,8 +22,9 @@ class Result extends Component {
                     </div>
                     <div className="panel-body">
                         <div id="test" style={this.setStyle()}>
-                            NỘI DUNG ĐOẠN TEXT
+                            {translate('nddt')}
                         </div>
+                        <h1>{translate('inbox.text')}</h1>
                     </div>
                 </div>
             </div>
@@ -30,4 +32,4 @@ class Result extends Component {
     }
 }
 
-export default Result
+export default withTranslate(Result)

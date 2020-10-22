@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
-import './App.css'
 import SetColor from './components/setColor'
 import SetFont from './components/SetFont'
 import Result from './components/Result'
 import Reset from './components/Reset'
+
+import {withTranslate} from 'react-redux-multilingual'
+import { connect } from "react-redux";
 class App extends Component {
     constructor(props){
         super(props)
@@ -35,10 +37,24 @@ class App extends Component {
             })
         }
     }
+    UNSAFE_componentWillReceiveProps(n){
+        console.log('hihi',n);
+    }
+    onChangeLanguage=typeLan=>{
+        this.props.onChangeLanguage(typeLan)
+        // dispatch(IntlActions.setLocate(typeLan))
+    }
   render() {
+
+      const {translate} = this.props
     return (
     
       <div className="container">
+          <div className="row">
+              <button onClick={()=>this.onChangeLanguage('vn')}>{translate('language.vn')}</button>
+              <button onClick={()=>this.onChangeLanguage('en')}>{translate('language.en')}</button>
+              <button onClick={()=>this.onChangeLanguage('jp')}>{translate('language.jp')}</button>
+          </div>
         <div className="row">
            <SetColor color={this.state.color} getColor={this.toGetColor}/>
             <SetFont fontSize={this.state.fontSize} getFont={this.togetFont}/>
@@ -48,9 +64,17 @@ class App extends Component {
            <Result color={this.state.color} fontSize={this.state.fontSize}/>
             <Reset toReset={this.toReset}/>
         </div>
+        <div className='test-muti-language'>
+            <p>{translate('welcome',{value:'Reactjs'})}</p>
+            <p>{translate('name',{name:'Thái'})}</p>
+        </div>
       </div>
     );
   }
 }
-
-export default App;
+const mapStateToProps=state=>{
+    return {
+        translations: state.translationReducer
+    }
+}
+export default withTranslate(connect(mapStateToProps,null)(App)) ;

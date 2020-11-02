@@ -16,6 +16,13 @@ class App extends Component {
             name:null
         }
     }
+    componentDidMount(){
+        let languageApp = localStorage.getItem('languageApp');
+        console.log('languageApp: ',languageApp)
+        if(languageApp){
+            this.props.onChangeLanguage(languageApp)
+        }
+    }
     toGetColor = (param) => {
         this.setState({
             color: param
@@ -42,7 +49,12 @@ class App extends Component {
     }
     onChangeLanguage=typeLan=>{
         this.props.onChangeLanguage(typeLan)
+        localStorage.setItem('languageApp',typeLan)
         // dispatch(IntlActions.setLocate(typeLan))
+    }
+    componentWillUnmount(n){
+        console.log('componentWillUnmount: ',n);
+        
     }
   render() {
 
